@@ -21,7 +21,7 @@ User.init(
       validate: {
         len: [8, "Password must be at least 8 characters"]
       }
-    }
+    },
   },
 
   {
