@@ -3,7 +3,7 @@ const router = require('express').Router();
 
 //import all api route riles here
 const apiRoutes = require('./api');
-// const htmlRoutes = require("./html")
+const htmlRoutes = require("./html")
 // import all html route files here
 
 
@@ -11,6 +11,6 @@ const apiRoutes = require('./api');
 router.use("/", apiRoutes);
 
 // add html routes to the router
-// router.use('/', htmlRoutes);
+router.use('/', htmlRoutes);
 
 module.exports = router;
