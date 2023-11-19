@@ -5,6 +5,12 @@ class Blogpost extends Model {}
 
 Blogpost.init(
   {
+    id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true
+    },
     title: {
       type: DataTypes.STRING,
       unique: true,
@@ -15,9 +21,10 @@ Blogpost.init(
       allowNull: false
     },
     user_id: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
+      allowNull: false,
       references: {
-        model: "User",
+        model: "user",
         key: "id"
       }
     },
@@ -29,7 +36,7 @@ Blogpost.init(
     timestamps: true,
     underscored: true,
     freezeTableName: true,
-    modelName: 'Blogpost'
+    modelName: 'blogpost'
   }
 );
 
