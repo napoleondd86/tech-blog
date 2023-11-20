@@ -8,7 +8,7 @@ const htmlRoutes = require("./html")
 
 
 // Add api routes to the router
-router.use("/", apiRoutes);
+router.use("/api", apiRoutes);
 
 // add html routes to the router
 router.use('/', htmlRoutes);

@@ -1,1 +1,17 @@
 <h1>This is the Home Page</h1>
+
+{{#unless loggedIn}}
+
+<div id="login-here">
+  [login]
+</div>
+
+<div id="signup-here">
+  [signup]
+</div>
+{{/unless}}
+
+{{#each blogposts as |blogpost|}}
+
+
+{{/each}}

@@ -13,7 +13,7 @@ const hbs = exphbs.create({});
 const PORT = process.env.PORT || 3001;
 
 //middleware
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
@@ -38,13 +38,11 @@ app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
 // Home Page route
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, "public/index.html"))
-})
+
 
 app.use(routes);
 
 const okToSync = (process.env.NODE_ENV === 'production') ? false : true;
-sequelize.sync({force: okToSync}).then(() => {
+sequelize.sync({force: false}).then(() => {
   app.listen(PORT, () => console.log('Now Listening'))
 })
