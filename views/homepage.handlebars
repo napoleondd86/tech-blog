@@ -12,6 +12,14 @@
 {{/unless}}
 
 {{#each blogposts as |blogpost|}}
-
-
+  <div class="container blogpost" onclick="toggleComments('{{blogpost._id}}')">
+    <header class="blogpost-header">
+      <h2>{{blogpost.title}}</h2>
+      <div>Posted by {{blogpost.username}} on {{blogpost.created_at}}</div>
+    </header>
+    <p class="blogpost-content">{{blogpost.content}}</p>
+  </div>
+  <div id="comments-{{blogpost.id}}" class="comments" style="display: none">
+  {{>comment}}
+</div>
 {{/each}}

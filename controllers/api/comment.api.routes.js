@@ -7,7 +7,7 @@ const Comment = require("../../models/Comment")
 
 
 // Get all records
-router.get('/api/comments', async(req, res) => {
+router.get('/', async(req, res) => {
   try{
     const payload = await Comment.findAll();
     res.status(200).json({ status: "success", payload})
@@ -17,8 +17,9 @@ router.get('/api/comments', async(req, res) => {
 })
 
 // Get one record by pk
-router.get('/api/comments/:id', async(req, res) => {
+router.get('/:id', async(req, res) => {
   try{
+    // const blogpostId = req.params.id;
     const payload = await Comment.findByPk(req.params.id);
     res.status(200).json({ status: "success", payload})
   } catch(err){
@@ -27,7 +28,7 @@ router.get('/api/comments/:id', async(req, res) => {
 })
 
 // Create a new record
-router.post('/api/comments', async(req, res) => {
+router.post('/', async(req, res) => {
   try{
     const payload = await Comment.create(req.body);
     res.status(200).json({ status: "success", payload})
@@ -37,7 +38,7 @@ router.post('/api/comments', async(req, res) => {
 })
 
 // Update a record
-router.put('/api/comments/:id', async(req, res) => {
+router.put('/:id', async(req, res) => {
   try{
     const payload = await Comment.update(
       req.body,
@@ -54,7 +55,7 @@ router.put('/api/comments/:id', async(req, res) => {
 })
 
 // Delete a record
-router.delete('/api/comments/:id', async(req, res) => {
+router.delete('/:id', async(req, res) => {
   try{
     const payload = await Comment.destroy({
       where: {

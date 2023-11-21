@@ -7,7 +7,7 @@ const Blogpost = require("../../models/Blogpost")
 
 
 // Get all records
-router.get('/api/blogposts', async(req, res) => {
+router.get('/', async(req, res) => {
   try{
     const payload = await Blogpost.findAll();
     res.status(200).json({ status: "success", payload})
@@ -17,7 +17,7 @@ router.get('/api/blogposts', async(req, res) => {
 })
 
 // Get one record by pk
-router.get('/api/blogposts/:id', async(req, res) => {
+router.get('/:id', async(req, res) => {
   try{
     const payload = await Blogpost.findByPk(req.params.id);
     res.status(200).json({ status: "success", payload})
@@ -27,7 +27,7 @@ router.get('/api/blogposts/:id', async(req, res) => {
 })
 
 // Create a new record
-router.post('/api/blogposts', async(req, res) => {
+router.post('/', async(req, res) => {
   try{
     const payload = await Blogpost.create(req.body);
     res.status(200).json({ status: "success", payload})
@@ -37,7 +37,7 @@ router.post('/api/blogposts', async(req, res) => {
 })
 
 // Update a record
-router.put('/api/blogposts/:id', async(req, res) => {
+router.put('/:id', async(req, res) => {
   try{
     const payload = await Blogpost.update(
       req.body,
@@ -54,7 +54,7 @@ router.put('/api/blogposts/:id', async(req, res) => {
 })
 
 // Delete a record
-router.delete('/api/blogposts/:id', async(req, res) => {
+router.delete('/:id', async(req, res) => {
   try{
     const payload = await Blogpost.destroy({
       where: {

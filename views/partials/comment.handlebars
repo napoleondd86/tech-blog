@@ -1,0 +1,7 @@
+{{#each comments as |comment|}}
+<div id="comments-{{comment.blogpost_id}}" class="comments" style="display: none">
+  <header></header>
+  <p>{{comment.content}}</p>
+  <p>--{{comment.user_id}}, {{comment.created_at}}</p>
+</div>
+{{/each}}

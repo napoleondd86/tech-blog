@@ -61,3 +61,36 @@ signupLink?.addEventListener("click", function(e){
   e.preventDefault()
   handleSignupClick()
 })
+
+
+
+
+
+
+
+function toggleComments(blogpostId) {
+  let commentsContainer = document.getElementById('comments-' + blogpostId);
+  if(commentsContainer.innerHTML === "") {
+    fetchComments(blogpostId)
+  } 
+  commentsContainer.style.display = comments.style.display === "none" ? "block" : "none";
+}
+
+function fetchComments(blogpostId){
+  fetch("/api/comments" + blogpostId)
+    .then(response => response.json())
+    .then(comments => {
+      const commentsContainer = document.getElementById("comments-" + blogpostId);
+      comments.foreach(comment => {
+        const commentEl = `
+        <div class="comment">
+          <p>${comment.content}</p>
+          <p>--${comment.user_id}, ${new Date(comment.created_at).toLocaleString()}</p>
+        </div>
+        `;
+        commentsContainer.innerHTML += commentEl;
+      })
+      
+})
+  .catch(error => console.error("Error:", error));
+}

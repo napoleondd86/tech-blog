@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const {User} = require("../../models/")
 
+//////////////////// IS /SIGNUP CORRECT???????????????
 // THIS IS A SIGNUP
 router.post("/signup", async (req, res) => {
   try{
@@ -26,6 +27,7 @@ router.post("/signup", async (req, res) => {
   }
 })
 
+/////////////// IS /LOGIN CORRECT?????????????????????????
 // THIS IS THE LOGIN
 router.post("/login", async (req, res) => {
   console.log("hello!!!")
@@ -60,7 +62,7 @@ router.post("/login", async (req, res) => {
     }
 })
   
-
+///////////////// IS /LOGOUT CORRECT????????????????????
 // THIS IS THE LOGOUT
 router.post("/logout", (req, res) => {
   console.log("hello!!!")
@@ -74,9 +76,9 @@ router.post("/logout", (req, res) => {
 })
 
 
-
+///////////////////// IS THIS NECESSARY ??????????????
 // Get all records
-router.get('/api/user', async(req, res) => {
+router.get('/', async(req, res) => {
   try{
     const payload = await User.findAll();
     res.status(200).json({ status: "success", payload})
@@ -86,7 +88,7 @@ router.get('/api/user', async(req, res) => {
 })
 
 // Get one record by pk
-router.get('/api/user/:id', async(req, res) => {
+router.get('/:id', async(req, res) => {
   try{
     const payload = await User.findByPk(req.params.id);
     res.status(200).json({ status: "success", payload})
@@ -96,7 +98,7 @@ router.get('/api/user/:id', async(req, res) => {
 })
 
 // Create a new record
-router.post('/api/user', async(req, res) => {
+router.post('/', async(req, res) => {
   try{
     const payload = await User.create(req.body);
     res.status(200).json({ status: "success", payload})
@@ -106,7 +108,7 @@ router.post('/api/user', async(req, res) => {
 })
 
 // Update a record
-router.put('/api/user/:id', async(req, res) => {
+router.put('/:id', async(req, res) => {
   try{
     const payload = await User.updat(
       req.body,
@@ -123,7 +125,7 @@ router.put('/api/user/:id', async(req, res) => {
 })
 
 // Delete a record
-router.delete('/api/user/:id', async(req, res) => {
+router.delete('/:id', async(req, res) => {
   try{
     const payload = await User.destroy({
       where: {
