@@ -22,7 +22,7 @@ Blogpost.init(
     },
     user_id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true, // changed to true for testing SHOULD BE FALSE
       references: {
         model: "user",
         key: "id"

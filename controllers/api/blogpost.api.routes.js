@@ -9,6 +9,7 @@ const Blogpost = require("../../models/Blogpost")
 // Get all records
 router.get('/', async(req, res) => {
   try{
+    console.log("get all blogposts")
     const payload = await Blogpost.findAll();
     res.status(200).json({ status: "success", payload})
   } catch(err){
@@ -26,10 +27,20 @@ router.get('/:id', async(req, res) => {
   }
 })
 
-// Create a new record
+// Create a new BLOGPOST
 router.post('/', async(req, res) => {
   try{
-    const payload = await Blogpost.create(req.body);
+    console.log("inside create blogpost route")
+    console.log(req.body)
+    console.log(req.session)
+    const userId = req.session.user_id;
+    
+    const newData = {
+      ...req.body,
+      user_id: userId
+    }
+    console.log(newData)
+    const payload = await Blogpost.create(newData);
     res.status(200).json({ status: "success", payload})
   } catch(err){
     res.status(500).json({ status: "error", payload: err.message})

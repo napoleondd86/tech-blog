@@ -11,35 +11,31 @@ router.get('/', async (req, res) => {
         {
           model: User,
           attributes: ["username"]
-        }
-      ]
-    })
-    const allComments = await Comment.findAll({
-      include: [
-        {
-          model: Blogpost,
-          attributes: ["_id"]
         },
         {
-          model: User,
-          attributes: ["_id"]
+          model: Comment,
+          include: {
+            model: User,
+            attributes: ["username"]
+          }
+
         }
       ]
     })
+    
     // SERIALIZE THE DATA
-    const comments = allComments.map(comment => comment.get({plain: true}))
+
     const blogposts = allBlogposts.map(blogpost=>blogpost.get({plain: true}))
-    console.log(blogposts)
+    console.log("this is the homepage blogposts", blogposts)
     res.render("homepage", {
       // PASS DATA TO HANDLEBARS
-      comments,
       blogposts,
       loggedIn: req.session?.loggedIn
     });
   }
   catch (err) {
     console.log(err)
-    res.status(500).json(err)
+    res.status(500).json({status: "error", payload: err.message})
   }
 });
 

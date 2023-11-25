@@ -27,10 +27,17 @@ router.get('/:id', async(req, res) => {
   }
 })
 
-// Create a new record
+// Create a new COMMENT
 router.post('/', async(req, res) => {
   try{
-    const payload = await Comment.create(req.body);
+    console.log("Inside create comment route")
+    const userId = req.session.user_id
+    const newData = {
+      ...req.body,
+      user_id: userId
+    }
+    console.log(newData)
+    const payload = await Comment.create(newData);
     res.status(200).json({ status: "success", payload})
   } catch(err){
     res.status(500).json({ status: "error", payload: err.message})

@@ -3,16 +3,30 @@
 {{#unless loggedIn}}
 
 <div id="login-here">
-  [login]
+  <h1>Login</h1>
+  <form>
+    <label for="login-username">Username</label>
+    <input type="text" name="login-username" id="login-username">
+    <label for="login-password">Password</label>
+    <input type="password" name="login-password" id="login-password">
+    <input type="submit" >
+  </form>
 </div>
 
 <div id="signup-here">
-  [signup]
+  <h1>Signup</h1>
+  <form >
+    <label for="signup-username">Username</label>
+    <input type="text" name="signup-username" id="signup-username">
+    <label for="signup-password">Password</label>
+    <input type="password" name="signup-password" id="signup-password">
+    <input type="submit" >
+  </form>
 </div>
 {{/unless}}
-
+<div id="blogpostsContainer">
 {{#each blogposts as |blogpost|}}
-  <div class="container blogpost" onclick="toggleComments('{{blogpost._id}}')">
+  <div class="container blogpost" onclick="toggleComments('{{blogpost.id}}')">
     <header class="blogpost-header">
       <h2>{{blogpost.title}}</h2>
       <div>Posted by {{blogpost.username}} on {{blogpost.created_at}}</div>
@@ -20,6 +34,18 @@
     <p class="blogpost-content">{{blogpost.content}}</p>
   </div>
   <div id="comments-{{blogpost.id}}" class="comments" style="display: none">
-  {{>comment}}
-</div>
+    {{#each blogpost.comments as |commentData|}}
+      {{>comment commentData}}
+    {{/each}}
+    <div>
+      <form id="submitComment-{{blogpost.id}}">
+        <label for="newComment">Comment</label>
+        <input type="text" name="newComment" id="newComment-{{blogpost.id}}">
+        <input type="submit" value="➕ My Comment">
+      </form>
+    </div>
+  </div>
 {{/each}}
+  
+
+</div>

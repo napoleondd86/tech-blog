@@ -1,1 +1,17 @@
 <h1>This is the Dashboard</h1>
+
+<div id="myBlogposts">
+  {{#each blogposts as |blogpost|}}
+  <header>
+    <h2>{{blogpost.title}}</h2>
+    <p></p>
+    {{#each blogpost.comments as |comment|}}
+    <div>
+      <p>{{comment.content}} created by {{comment.user.username}}</p>
+    </div>
+    {{/each}}
+  </header>
+  <p>{{blogpost.content}}</p>
+  {{/each}}
+</div>
+<button id="newBlogBtn"> ➕ New Post</button>

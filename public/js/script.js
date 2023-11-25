@@ -6,12 +6,6 @@ const signupArea = document.querySelector("#signup-here")
 
 
 
-
-
-
-
-
-
 function handleLoginClick(){
   const url = window.location.href.split("?")[0];
   window.location.href = `${url}?showlogin=true`
@@ -66,31 +60,202 @@ signupLink?.addEventListener("click", function(e){
 
 
 
-
+// if comments container is "display-none" turn to "display-block"
+// if comments container is "display-block" to to "display- none"
 
 function toggleComments(blogpostId) {
   let commentsContainer = document.getElementById('comments-' + blogpostId);
-  if(commentsContainer.innerHTML === "") {
-    fetchComments(blogpostId)
+  if(commentsContainer.style.display === "none") {
+    commentsContainer.style.display = "block"  
+  } else {
+    commentsContainer.style.display = "none"  
+  }
+}
+  
+
+  // commentsContainer.style.display = comments.style.display === "none" ? "block" : "none";
+
+
+
+function newBlogpost(){
+  // const newblogBtn = document.getElementById("newBlogBtn");  // I DON'T THINK I NEED THIS
+  //
+  const myBlogpostsContainer = document.getElementById("myBlogposts");
+  let newBlogpost = document.getElementById("new-blogpost")
+  if(newBlogpost){
+    console.log("new blogpost el exists")
+    newBlogpost.style.display = "block"
+    return
   } 
-  commentsContainer.style.display = comments.style.display === "none" ? "block" : "none";
+  console.log("outside of the if statment")
+    const blogpostEl = `
+    <div id="new-blogpost" >
+      <header>
+        <h2>Create New Blogpost</h2>
+      </header>
+      <div>
+        <form id="new-blogpost-form">
+          <label for="title">Title</label>
+          <input type="text" id="title" name="new-blogpost">
+          <label for="title">Content</label>
+          <input type="text" id="content" name="new-blogpost">
+          <input type="submit" value="Create" >
+        </form>
+      </div>
+    </div>
+  
+    `
+    console.log(myBlogpostsContainer)
+    console.log(myBlogpostsContainer.innerHTML)
+    console.log(blogpostEl)
+   myBlogpostsContainer.innerHTML += blogpostEl;
+
+  const newBlogpostEl = document.getElementById("new-blogpost-form");
+  newBlogpostEl?.addEventListener("submit", blogpost)
 }
 
-function fetchComments(blogpostId){
-  fetch("/api/comments" + blogpostId)
-    .then(response => response.json())
-    .then(comments => {
-      const commentsContainer = document.getElementById("comments-" + blogpostId);
-      comments.foreach(comment => {
-        const commentEl = `
-        <div class="comment">
-          <p>${comment.content}</p>
-          <p>--${comment.user_id}, ${new Date(comment.created_at).toLocaleString()}</p>
-        </div>
-        `;
-        commentsContainer.innerHTML += commentEl;
-      })
-      
+// signupLink?.addEventListener("click", function(e){
+//   e.preventDefault()
+//   handleSignupClick()
+// })
+
+const newblogBtn = document.getElementById("newBlogBtn");  
+newblogBtn?.addEventListener("click", (e) => {
+  e.preventDefault()
+  newBlogpost()
 })
-  .catch(error => console.error("Error:", error));
+
+// NEW BLOGPOST
+const blogpost = async function(e){
+    e.preventDefault();
+    console.log("inside newBlogpost")
+    const title = document.getElementById("title").value;
+    const content = document.getElementById("content").value;
+    
+    const response = await fetch ("/api/blogpost", {
+      method: "POST",
+      body: JSON.stringify({title, content}),
+      headers: {"Content-Type": "application/json"},
+    })
+    console.log("blogpost submitted")
+    if(response.ok){
+      window.location.reload()
+    }
 }
+
+const newComment = async function(e){
+  e.preventDefault();
+  console.log(e.target)
+  console.log("inside newComment");
+  const content = document.getElementById(`newComment-${e.target}`).value;
+
+  const response = await fetch("/api/comment", {
+    method: "POST",
+    body: JSON.stringify({content}),
+    headers: {"Content-Type": "application/json"}
+  })
+  console.log("comment submitted");
+  if(response.ok){
+    window.location.reload()
+  }
+}
+
+// ACTUAL LOGIN
+const login = document.getElementById("login-here");
+login?.addEventListener("submit", async function(e){
+  e.preventDefault();
+  const username = document.getElementById("login-username").value.trim();
+  const password = document.getElementById("login-password").value.trim();
+  if (username && password) {
+    console.log(username, password);
+
+    const response = await fetch("/api/user/login", {
+      method: "POST",
+      body: JSON.stringify({ username, password}),
+      headers: {"Content-Type": "application/json"}
+    });
+    // cleaning the response
+    const result = await response.json();
+    console.log(result);
+
+    if (response.ok) {
+      document.location.replace("/");
+    } else {
+      alert("failed to Login")
+    }
+  }
+})
+
+const signup = document.getElementById("signup-here");
+signup?.addEventListener("submit", async function(e){
+  e.preventDefault();
+  const username = document.getElementById("signup-username").value.trim();
+  const password = document.getElementById("signup-password").value.trim();
+  if (username && password) {
+    console.log(username, password);
+
+    const response = await fetch("/api/user/signup", {
+      method: "POST",
+      body: JSON.stringify({ username, password}),
+      headers: {"Content-Type": "application/json"}
+    });
+    // cleaning the response
+    const result = await response.json();
+    console.log(result);
+
+    if (response.ok) {
+      document.location.replace("/");
+    } else {
+      alert("failed to Signup")
+    }
+  }
+})
+
+
+//////////////////// ALTERNATIVE TO ABOVE, WHICH IS BETTER ???????????????
+// const login = document.getElementById("login-here");
+
+// const formHandler = async(e) => {
+//   e.preventDefault();
+//   console.log("hello")
+//   const form = e.target;
+//   const username = document.getElementById("login-username").value.trim();
+//   const password = document.getElementById("login-password").value.trim();
+
+//   let payload = {username, password}
+//   let url= "";
+
+//   if (form.id === "login-here"){
+//     url = "/api/user/login"
+//   } else if (form.id === "signup-here"){
+//     //if we wanted to add an email input
+//     //const email = form.querySelector("#email").value.trim();
+//     // payload.email = email;
+//     url = "/api/user/signup"
+//   }
+
+//   if (username && password) {
+//     console.log(username, password);
+    
+//     const response = await fetch(url, {
+//       method: "POST",
+//       body: JSON.stringify(payload),
+//       headers: {"Content-Type": "application/json"}
+//     });
+//     // cleaning the response
+//     const result = await response.json(payload);
+//     console.log(result);
+    
+//     if (response.ok) {
+//       document.location.replace("/");
+//     } else {
+//       alert("failed to login or signup")
+//     }
+//   }
+// }
+
+// document.getElementById("login-here")?.addEventListener("submit", formHandler)
+// document.getElementById("signup-here")?.addEventListener("submit", formHandler)
+
+
+// document.getElementById("blogpost-container").addEventListener("click", toggleComments)
