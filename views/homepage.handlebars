@@ -24,28 +24,31 @@
   </form>
 </div>
 {{/unless}}
+
 <div id="blogpostsContainer">
 {{#each blogposts as |blogpost|}}
+
   <div class="container blogpost" onclick="toggleComments('{{blogpost.id}}')">
     <header class="blogpost-header">
       <h2>{{blogpost.title}}</h2>
-      <div>Posted by {{blogpost.username}} on {{blogpost.created_at}}</div>
+      <div>Posted by {{blogpost.user.username}} on {{formatDate blogpost.createdAt}}</div>
     </header>
     <p class="blogpost-content">{{blogpost.content}}</p>
   </div>
+
   <div id="comments-{{blogpost.id}}" class="comments" style="display: none">
     {{#each blogpost.comments as |commentData|}}
       {{>comment commentData}}
     {{/each}}
+
     <div>
       <form id="submitComment-{{blogpost.id}}">
-        <label for="newComment">Comment</label>
+        <label for="newComment-{{blogpost.id}}">Comment</label>
         <input type="text" name="newComment" id="newComment-{{blogpost.id}}">
         <input type="submit" value="➕ My Comment">
       </form>
     </div>
+
   </div>
 {{/each}}
-  
-
 </div>

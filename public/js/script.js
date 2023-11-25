@@ -11,7 +11,6 @@ function handleLoginClick(){
   window.location.href = `${url}?showlogin=true`
 }
 
-
 function checkForLogin(){
   const href = window.location.href
   const params = href.split("?")[1]
@@ -22,17 +21,7 @@ function checkForLogin(){
   }
 }
 
-loginLink?.addEventListener("click", function(e){
-  e.preventDefault()
-  handleLoginClick()
-})
-
 checkForLogin()
-
-
-
-
-
 
 
 function handleSignupClick(){
@@ -51,18 +40,11 @@ function checkForSignup(){
 
 checkForSignup()
 
-signupLink?.addEventListener("click", function(e){
-  e.preventDefault()
-  handleSignupClick()
-})
-
-
-
-
 
 // if comments container is "display-none" turn to "display-block"
 // if comments container is "display-block" to to "display- none"
 
+// DISPLAY COMMENTS OR UNDISPLAY
 function toggleComments(blogpostId) {
   let commentsContainer = document.getElementById('comments-' + blogpostId);
   if(commentsContainer.style.display === "none") {
@@ -71,15 +53,8 @@ function toggleComments(blogpostId) {
     commentsContainer.style.display = "none"  
   }
 }
-  
-
-  // commentsContainer.style.display = comments.style.display === "none" ? "block" : "none";
-
-
 
 function newBlogpost(){
-  // const newblogBtn = document.getElementById("newBlogBtn");  // I DON'T THINK I NEED THIS
-  //
   const myBlogpostsContainer = document.getElementById("myBlogposts");
   let newBlogpost = document.getElementById("new-blogpost")
   if(newBlogpost){
@@ -105,25 +80,13 @@ function newBlogpost(){
     </div>
   
     `
-    console.log(myBlogpostsContainer)
-    console.log(myBlogpostsContainer.innerHTML)
-    console.log(blogpostEl)
+ 
    myBlogpostsContainer.innerHTML += blogpostEl;
 
   const newBlogpostEl = document.getElementById("new-blogpost-form");
   newBlogpostEl?.addEventListener("submit", blogpost)
 }
 
-// signupLink?.addEventListener("click", function(e){
-//   e.preventDefault()
-//   handleSignupClick()
-// })
-
-const newblogBtn = document.getElementById("newBlogBtn");  
-newblogBtn?.addEventListener("click", (e) => {
-  e.preventDefault()
-  newBlogpost()
-})
 
 // NEW BLOGPOST
 const blogpost = async function(e){
@@ -143,15 +106,18 @@ const blogpost = async function(e){
     }
 }
 
-const newComment = async function(e){
-  e.preventDefault();
-  console.log(e.target)
-  console.log("inside newComment");
-  const content = document.getElementById(`newComment-${e.target}`).value;
 
+
+// NEW COMMENT
+const newComment = async function(e){
+  const commentForm = e.target;
+  const blogpost_id = commentForm.id.split("-")[1];
+  console.log(blogpost_id)
+  const content = document.getElementById(`newComment-${blogpost_id}`).value;
+  console.log(content)
   const response = await fetch("/api/comment", {
     method: "POST",
-    body: JSON.stringify({content}),
+    body: JSON.stringify({content, blogpost_id}),
     headers: {"Content-Type": "application/json"}
   })
   console.log("comment submitted");
@@ -159,6 +125,11 @@ const newComment = async function(e){
     window.location.reload()
   }
 }
+
+document.getElementById("blogpostsContainer")?.addEventListener("submit", (e) => {
+  e.preventDefault();
+  newComment(e)
+})
 
 // ACTUAL LOGIN
 const login = document.getElementById("login-here");
@@ -209,6 +180,22 @@ signup?.addEventListener("submit", async function(e){
       alert("failed to Signup")
     }
   }
+})
+
+const newblogBtn = document.getElementById("newBlogBtn");  
+newblogBtn?.addEventListener("click", (e) => {
+  e.preventDefault()
+  newBlogpost()
+})
+
+signupLink?.addEventListener("click", function(e){
+  e.preventDefault()
+  handleSignupClick()
+})
+
+loginLink?.addEventListener("click", function(e){
+  e.preventDefault()
+  handleLoginClick()
 })
 
 

@@ -30,7 +30,8 @@ router.get('/:id', async(req, res) => {
 // Create a new COMMENT
 router.post('/', async(req, res) => {
   try{
-    console.log("Inside create comment route")
+    console.log("Inside create comment route");
+    console.log(req.body)
     const userId = req.session.user_id
     const newData = {
       ...req.body,

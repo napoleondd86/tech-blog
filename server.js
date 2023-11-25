@@ -10,6 +10,13 @@ const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const exphbs = require('express-handlebars');
 const hbs = exphbs.create({});
 
+
+// CUSTOM HANDLEBARS HELPER TO FORMAT THE TIMESTAMPS/DATE
+hbs.handlebars.registerHelper("formatDate", function(date) {
+  const options = {year: "numeric", month: "numeric", day: "numeric"};
+  return date.toLocaleDateString("en-US", options)
+})
+
 const PORT = process.env.PORT || 3001;
 
 //middleware
