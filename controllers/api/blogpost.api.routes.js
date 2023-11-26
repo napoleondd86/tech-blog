@@ -66,7 +66,9 @@ router.put('/:id', async(req, res) => {
 
 // Delete a record
 router.delete('/:id', async(req, res) => {
+  console.log("inside delete route")
   try{
+    console.log(req.params.id)
     const payload = await Blogpost.destroy({
       where: {
         id: req.params.id

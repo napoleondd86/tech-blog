@@ -54,6 +54,18 @@ function toggleComments(blogpostId) {
   }
 }
 
+async function deleteBlogpost(blogpostId){
+  console.log("inside client  deleteblogpost function")
+  // let blogpost = document.getElementById("blogpost-" + blogpostId);
+  const response = await fetch(`/api/blogpost/${blogpostId}`, {
+    method: "DELETE",
+    headers: {"Content-Type": "application/json"}
+  })
+  if(response.ok){
+    window.location.reload() // WHEN RELOADS IT RUNS "newBlogpost()"
+  }
+}
+
 function newBlogpost(){
   const myBlogpostsContainer = document.getElementById("myBlogposts");
   let newBlogpost = document.getElementById("new-blogpost")

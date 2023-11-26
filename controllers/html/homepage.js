@@ -18,7 +18,6 @@ router.get('/', async (req, res) => {
             model: User,
             attributes: ["username"]
           }
-
         }
       ]
     })
@@ -27,7 +26,7 @@ router.get('/', async (req, res) => {
 
     const blogposts = allBlogposts.map(blogpost=>blogpost.get({plain: true}))
     console.log("this is the homepage blogposts", blogposts)
-    console.log("blogpost 4 comments array", blogposts[3].comments)
+    console.log("blogpost 5 comments array", blogposts[4].comments)
     res.render("homepage", {
       // PASS DATA TO HANDLEBARS
       blogposts,

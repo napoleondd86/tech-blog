@@ -10,6 +10,13 @@ router.get('/', async (req, res) => {
       include: [{
         model: User,
         attributes: ["username"]
+      },
+      {
+        model: Comment,
+        include: {
+          model: User,
+          attributes: ["username"]
+        }
       }],
       where: {
         user_id: req.session.user_id

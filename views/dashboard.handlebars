@@ -1,17 +1,28 @@
 <h1>This is the Dashboard</h1>
 
-<div id="myBlogposts">
+<div id="blogpostsContainer">
   {{#each blogposts as |blogpost|}}
-  <header>
-    <h2>{{blogpost.title}}</h2>
-    <p></p>
-    {{#each blogpost.comments as |comment|}}
-    <div>
-      <p>{{comment.content}} created by {{comment.user.username}}</p>
+  <div class="blogpost" id="blogpost-{{blogpost.id}}" >
+
+    <div class="container" onclick="toggleComments('{{blogpost.id}}')">
+      <header class="blogpost-header">
+        <h2>{{blogpost.title}}</h2>
+      </header>
+      <p>{{blogpost.content}}</p>
     </div>
-    {{/each}}
-  </header>
-  <p>{{blogpost.content}}</p>
+
+    <div id="comments-{{blogpost.id}}" class="container comments" style="display: none">
+      {{#each blogpost.comments as |commentData|}}
+        {{>comment commentData}}
+      {{!-- <div class="comment">
+        <p>{{comment.content}} created by {{comment.user.username}}</p>
+      </div> --}}
+      {{/each}}
+      <button type="button" class="update-btn" onclick="updateBlogpost('{{blogpost.id}}')">Update</button>
+      <button type="button" class="delete-btn" onclick="deleteBlogpost('{{blogpost.id}}')">Delete</button>
+    </div>
+
+  </div>
   {{/each}}
 </div>
 <button id="newBlogBtn"> ➕ New Post</button>
