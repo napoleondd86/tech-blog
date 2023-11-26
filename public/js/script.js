@@ -66,8 +66,45 @@ async function deleteBlogpost(blogpostId){
   }
 }
 
+function updateBlogpost(blogpostId){
+  const title = document.getElementById(`title-${blogpostId}`)
+  var currentTitle = title.innerText;
+  const content = document.getElementById(`content-${blogpostId}`)
+  var currentContent = content.innerText;
+
+  // REPLACE THE H2-tag with input fields
+  var titleInputField = `<input type="text" id="update-title-${blogpostId}" value="${currentTitle}" />`;
+  title.outerHTML = titleInputField
+  
+  var contentInputField = `<input type="text" id="update-content-${blogpostId}" value="${currentContent}" />`;
+  contentInputField += `<button onclick="submitUpdate('${blogpostId}')" >Save</button>`;
+  content.outerHTML = contentInputField
+
+}
+
+async function submitUpdate(blogpostId){
+  console.log("inside client updateBlogpost function");
+  var content = document.getElementById("update-content-" + blogpostId)
+  var title = document.getElementById("update-title-" + blogpostId)
+
+  const response = await fetch(`/api/blogpost/${blogpostId}`, {
+    method: "PUT",
+    body: JSON.stringify({ title, content }),
+    headers: {"Content-Type": "application/json"}
+  })
+  if(response.ok){
+    // Replace the inputfields back to ptag and h2 respectively
+    var contentInput = document.getElementById("update-content-" + blogpostId);
+    var titleInput = document.getElementById("update-title-" + blogpostId);
+    contentInput.outerHTML = `<p id="content-${blogpostId}">${content}</p>`;
+    titleInput.outerHTML = `<h2 id="title-${blogpostId}">${title}</h2>`
+
+    window.location.reload()
+  }
+}
+
 function newBlogpost(){
-  const myBlogpostsContainer = document.getElementById("myBlogposts");
+  const myBlogpostsContainer = document.getElementById("blogpostsContainer");
   let newBlogpost = document.getElementById("new-blogpost")
   if(newBlogpost){
     console.log("new blogpost el exists")
