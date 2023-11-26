@@ -50,6 +50,8 @@ router.post('/', async(req, res) => {
 // Update a record
 router.put('/:id', async(req, res) => {
   try{
+    console.log("inside update try")
+    console.log(req.body)
     const payload = await Blogpost.update(
       req.body,
       {
@@ -58,6 +60,7 @@ router.put('/:id', async(req, res) => {
         }
       }
     );
+    console.log(payload)
     res.status(200).json({ status: "success", payload})
   } catch(err){
     res.status(500).json({ status: "error", payload: err.message})

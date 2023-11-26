@@ -54,7 +54,9 @@ function toggleComments(blogpostId) {
   }
 }
 
-async function deleteBlogpost(blogpostId){
+// delete blogpost
+async function deleteBlogpost(blogpostId, event){
+  event.stopPropagation();
   console.log("inside client  deleteblogpost function")
   // let blogpost = document.getElementById("blogpost-" + blogpostId);
   const response = await fetch(`/api/blogpost/${blogpostId}`, {
@@ -62,45 +64,54 @@ async function deleteBlogpost(blogpostId){
     headers: {"Content-Type": "application/json"}
   })
   if(response.ok){
-    window.location.reload() // WHEN RELOADS IT RUNS "newBlogpost()"
+    window.location.reload() // RELOADS 
   }
 }
 
-function updateBlogpost(blogpostId){
+function updateBlogpost(blogpostId, event){
+  event.stopPropagation();
   const title = document.getElementById(`title-${blogpostId}`)
   var currentTitle = title.innerText;
   const content = document.getElementById(`content-${blogpostId}`)
   var currentContent = content.innerText;
 
   // REPLACE THE H2-tag with input fields
-  var titleInputField = `<input type="text" id="update-title-${blogpostId}" value="${currentTitle}" />`;
+  var titleInputField = `<header>
+    <h2>Update</h2>
+  </header>
+  <input type="text" id="update-title-${blogpostId}" value="${currentTitle}" />`;
   title.outerHTML = titleInputField
   
   var contentInputField = `<input type="text" id="update-content-${blogpostId}" value="${currentContent}" />`;
-  contentInputField += `<button onclick="submitUpdate('${blogpostId}')" >Save</button>`;
+  contentInputField += `<button onclick="submitUpdate('${blogpostId}', event)" >Save</button>`;
   content.outerHTML = contentInputField
 
 }
 
-async function submitUpdate(blogpostId){
+function submitUpdate(blogpostId, event){
+  event.stopPropagation();
   console.log("inside client updateBlogpost function");
-  var content = document.getElementById("update-content-" + blogpostId)
-  var title = document.getElementById("update-title-" + blogpostId)
+  var content = document.getElementById("update-content-" + blogpostId).value;
+  var title = document.getElementById("update-title-" + blogpostId).value;
 
-  const response = await fetch(`/api/blogpost/${blogpostId}`, {
+  console.log(content, title)
+  fetch(`/api/blogpost/${blogpostId}`, {
     method: "PUT",
     body: JSON.stringify({ title, content }),
     headers: {"Content-Type": "application/json"}
   })
-  if(response.ok){
-    // Replace the inputfields back to ptag and h2 respectively
-    var contentInput = document.getElementById("update-content-" + blogpostId);
-    var titleInput = document.getElementById("update-title-" + blogpostId);
-    contentInput.outerHTML = `<p id="content-${blogpostId}">${content}</p>`;
-    titleInput.outerHTML = `<h2 id="title-${blogpostId}">${title}</h2>`
-
-    window.location.reload()
-  }
+  .then(response => {
+    if(response.ok){
+      // Replace the inputfields back to ptag and h2 respectively
+      var contentInput = document.getElementById("update-content-" + blogpostId);
+      var titleInput = document.getElementById("update-title-" + blogpostId);
+      contentInput.outerHTML = `<p id="content-${blogpostId}">${content}</p>`;
+      titleInput.outerHTML = `<h2 id="title-${blogpostId}">${title}</h2>`
+  
+      window.location.reload()
+    }
+    
+  })
 }
 
 function newBlogpost(){

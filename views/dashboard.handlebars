@@ -18,9 +18,9 @@
         <p>{{comment.content}} created by {{comment.user.username}}</p>
       </div> --}}
       {{/each}}
-      <button type="button" class="update-btn" onclick="updateBlogpost('{{blogpost.id}}')">Update</button>
-      <button type="button" class="delete-btn" onclick="deleteBlogpost('{{blogpost.id}}')">Delete</button>
     </div>
+    <button type="button" class="update-btn container" onclick="updateBlogpost('{{blogpost.id}}', event)">Update</button>
+    <button type="button" class="delete-btn container" onclick="deleteBlogpost('{{blogpost.id}}', event)">Delete</button>
 
   </div>
   {{/each}}
