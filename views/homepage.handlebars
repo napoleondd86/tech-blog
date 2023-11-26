@@ -1,5 +1,7 @@
-<h1>This is the Home Page</h1>
 
+<header>
+  <h3>{{message}}</h3>
+</header>
 {{#unless loggedIn}}
 
 <div id="login-here">
@@ -27,9 +29,9 @@
 
 <div id="blogpostsContainer">
 {{#each blogposts as |blogpost|}}
-  <div class="blogpost">
-    
-    <div class="container " onclick="toggleComments('{{blogpost.id}}')">
+  <div class="blogpost container">
+
+    <div class="" onclick="toggleComments('{{blogpost.id}}')">
       <header class="blogpost-header">
         <h2>{{blogpost.title}}</h2>
         <div>Posted by {{blogpost.user.username}} on {{formatDate blogpost.createdAt}}</div>

@@ -22,6 +22,10 @@ router.get('/', async (req, res) => {
       ]
     })
     
+    let message = "";
+    if(req.query.loginRequired){
+      message = "You need to be logged in to access the Dashboard"
+    }
     // SERIALIZE THE DATA
 
     const blogposts = allBlogposts.map(blogpost=>blogpost.get({plain: true}))
@@ -30,8 +34,11 @@ router.get('/', async (req, res) => {
     res.render("homepage", {
       // PASS DATA TO HANDLEBARS
       blogposts,
-      loggedIn: req.session?.loggedIn
+      loggedIn: req.session?.loggedIn,
+      message,
+      homepage: true
     });
+    console.log("this is the redirect message", message)
   }
   catch (err) {
     console.log(err)

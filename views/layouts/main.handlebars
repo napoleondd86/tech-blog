@@ -11,7 +11,7 @@
 </head>
 
 <body>
-  <header>
+  <header class="navbar-header">
     <nav class="navbar bg-body-tertiary">
       <div class="container">
         <a class="navbar-brand" href="http://localhost:3001">Home</a>
@@ -24,7 +24,13 @@
         {{/if}}
       </div>
     </nav>
-
+    <h1>
+      {{#if homepage}}
+      Tech Blog
+      {{else}}
+      Dashboard
+      {{/if}}
+    </h1>
   </header>
 
 

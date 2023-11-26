@@ -1,14 +1,13 @@
-<h1>This is the Dashboard</h1>
 
 <div id="blogpostsContainer">
   {{#each blogposts as |blogpost|}}
-  <div class="blogpost" id="blogpost-{{blogpost.id}}" >
+  <div class="blogpost container" id="blogpost-{{blogpost.id}}" >
 
-    <div class="container" onclick="toggleComments('{{blogpost.id}}')">
+    <div class="" onclick="toggleComments('{{blogpost.id}}')">
       <header class="blogpost-header">
         <h2 id="title-{{blogpost.id}}">{{blogpost.title}}</h2>
       </header>
-      <p id="content-{{blogpost.id}}">{{blogpost.content}}</p>
+      <p class="blogpost-content" id="content-{{blogpost.id}}">{{blogpost.content}}</p>
     </div>
 
     <div id="comments-{{blogpost.id}}" class="container comments" style="display: none">

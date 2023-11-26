@@ -1,5 +1,25 @@
+/* declare variables */
+:root{
+  --violet: #553555;
+  --egglplant: #755B69;
+  --cambridge-blue: #96C5B0;
+  --aquamarine: #ADF1D2;
+  --black: black;
+  --light-purple: #f1dee8;
 
+}
 
+body{
+  background-color: var(--light-purple);
+}
+
+h1 {
+  background-color: var(--violet);
+  padding: .75rem;
+  margin: .5rem;
+  width: fit-content;
+  border-radius: .5rem;
+}
 
 div#login-here,
 div#signup-here{
@@ -12,10 +32,79 @@ div#signup-here{
   margin: auto;
   width: 300px;
   height: 400px; 
-  border: 2px solid black;
+  border: 5px solid var(--black);
   background-color: white;
+}
+.navbar-header{
+  padding: 1rem;
+}
+
+
+.blogpost-header
+{
+  display: flex;
+  justify-content: space-between;
+  padding: .75rem;
+}
+
+.blogpost-content{
+  padding: .75rem;
+  font-size: 20px;
+
+}
+
+button {
+  background-color: var(--egglplant);
+  border: 2px solid var(--violet);
+  border-radius: .5rem;
+}
+
+button:hover{
+  color: var(--aquamarine);
 }
 
 .blogpost {
-  border: 2px solid red;
+  border: 2px solid var(--violet);
+  margin-bottom: 1rem;
+  padding-right: 0;
+  padding-left: 0;
+  padding-bottom: .5rem;
+  border-radius: .5rem;
+}
+
+.comments{
+  border-top: 2px solid var(--egglplant) ;
+}
+
+
+header {
+  background-color: var(--egglplant);
+  margin-left: 0;
+}
+
+h2:hover{
+  color: var(--aquamarine);
+  cursor: pointer;
+}
+
+a{
+  text-decoration: none;
+  color: var(--violet);
+}
+
+a:hover{
+  color: var(--aquamarine);
+}
+
+#blogpostsContainer{
+  padding: 1rem;
+}
+
+footer{
+  position: absolute;
+  bottom: 0;
+  background-color: var(--egglplant);
+  text-align: center;
+  width: 100%;
+  padding: 1rem;
 }
