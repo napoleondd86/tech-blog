@@ -1,7 +1,8 @@
-
-<header>
+{{#if message}}
+<div class="redirect">
   <h3>{{message}}</h3>
-</header>
+</div>
+{{/if}}
 {{#unless loggedIn}}
 
 <div id="login-here">
@@ -34,7 +35,7 @@
     <div class="" onclick="toggleComments('{{blogpost.id}}')">
       <header class="blogpost-header">
         <h2>{{blogpost.title}}</h2>
-        <div>Posted by {{blogpost.user.username}} on {{formatDate blogpost.createdAt}}</div>
+        <p>Posted by {{blogpost.user.username}} on {{formatDate blogpost.createdAt}}</p>
       </header>
       <p class="blogpost-content">{{blogpost.content}}</p>
     </div>

@@ -6,6 +6,7 @@
     <div class="" onclick="toggleComments('{{blogpost.id}}')">
       <header class="blogpost-header">
         <h2 id="title-{{blogpost.id}}">{{blogpost.title}}</h2>
+        <p>Posted on {{formatDate blogpost.createdAt}}</p>
       </header>
       <p class="blogpost-content" id="content-{{blogpost.id}}">{{blogpost.content}}</p>
     </div>
@@ -23,5 +24,9 @@
 
   </div>
   {{/each}}
+
+
 </div>
-<button id="newBlogBtn"> ➕ New Post</button>
+<div class="container newBlogBtn">
+  <button id="newBlogBtn"> ➕ New Post</button>
+</div>

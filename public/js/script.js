@@ -75,18 +75,42 @@ function updateBlogpost(blogpostId, event){
   const content = document.getElementById(`content-${blogpostId}`)
   var currentContent = content.innerText;
 
-  // REPLACE THE H2-tag with input fields
-  var titleInputField = `<header>
+  // REPLACE THE H2-tag with Update fields
+  var header = `
+  <header>
     <h2>Update</h2>
   </header>
-  <input type="text" id="update-title-${blogpostId}" value="${currentTitle}" />`;
-  title.outerHTML = titleInputField
+  `;
   
-  var contentInputField = `<input type="text" id="update-content-${blogpostId}" value="${currentContent}" />`;
-  contentInputField += `<button onclick="submitUpdate('${blogpostId}', event)" >Save</button>`;
-  content.outerHTML = contentInputField
+  // replace title and content with input fields
+  var contentInputField = `  
+  <label for="update-title-${blogpostId}">Title</label>
+  <input type="text" id="update-title-${blogpostId}" value="${currentTitle}" />
+  <label for="update-content-${blogpostId}">Content</label>
+  <input type="text" id="update-content-${blogpostId}" value="${currentContent}" />`;
 
+  // adding save and cancel buttons
+  contentInputField += `
+  <button id="save-${blogpostId}" onclick="submitUpdate('${blogpostId}', event)" >Save</button>
+  <button id="cancel-${blogpostId}" conclick="cancelUpdate('${blogpostId}', event, currentTitle, currentContent)" >Cancel</button>
+  `;
+  title.outerHTML = header
+  content.outerHTML = contentInputField
 }
+
+function cancelUpdate(blogpostId, event, title, content){
+  event.stopPropagation(); //i believe i need this
+  var content = document.getElementById("update-content-" + blogpostId).value;
+  var title = document.getElementById("update-title-" + blogpostId).value;
+  content.outerHTML = `<p id="content-${blogpostId}">${content}</p>`;
+  title.outerHTML = `<h2 id="title-${blogpostId}">${title}</h2>`
+
+  window.location.reload()
+}
+/*
+on cancel:
+currentTitle and currentContent is placed back
+*/
 
 function submitUpdate(blogpostId, event){
   event.stopPropagation();
@@ -124,7 +148,7 @@ function newBlogpost(){
   } 
   console.log("outside of the if statment")
     const blogpostEl = `
-    <div id="new-blogpost" >
+    <div class="container" id="new-blogpost" >
       <header>
         <h2>Create New Blogpost</h2>
       </header>
