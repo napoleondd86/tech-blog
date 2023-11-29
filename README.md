@@ -37,3 +37,7 @@
 
 ## Dashboard Screenshot
 ![App Preview 1](./public/images/screenshot-2.png)
+
+## Deployed Page
+
+- https://kurts-tech-blog-4b5c0e5dc80d.herokuapp.com/
